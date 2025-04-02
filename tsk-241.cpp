@@ -18,9 +18,10 @@ constexpr int max_length{14};
 constexpr int min_ch_code{33};
 constexpr int max_ch_code{126};
 constexpr int SYMBOLS_COUNT{3};
+enum result { YES = 0, NO = 1 };
 
 struct answer {
-  bool password(std::string& password) {
+  result password(std::string& password) {
     /*
      * - состоять из символов таблицы ASCII с кодами от 33 до 126;
      */
@@ -37,10 +38,7 @@ struct answer {
      * - быть не короче 8 символов и не длиннее 14;
      */
     if ((password.length() < min_length) || (password.length() > max_length)) {
-      std::cout << "incorrect length password" << std::endl;
-      return false;
-    } else {
-      std::cout << "correct length password" << std::endl;
+      return result::NO;
     }
     /*
      * - из 4 классов символов — большие буквы, маленькие буквы, цифры, прочие -
@@ -49,24 +47,17 @@ struct answer {
     int numUpper =
         std::ranges::count_if(password.begin(), password.end(), isupper);
 
-    std::cout << "numUpper " << numUpper << std::endl;
-
     int numLower =
         std::ranges::count_if(password.begin(), password.end(), islower);
-
-    std::cout << "numLower " << numLower << std::endl;
 
     int numDigit =
         std::ranges::count_if(password.begin(), password.end(), isdigit);
 
-    std::cout << "numDigit " << numDigit << std::endl;
-
     if ((numUpper + numLower + numDigit) < SYMBOLS_COUNT) {
-      std::cout << "incorrect symbol count " << std::endl;
-      return false;
+      return result::NO;
     }
 
-    return true;
+    return result::YES;
   };
 };
 
@@ -78,7 +69,16 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
 
   std::getline(std::cin, passwd);
 
-  std::cout << std::boolalpha << ans.password(passwd) << std::endl;
+  result _result = ans.password(passwd);
+
+  switch (_result) {
+    case result::NO:
+      std::cout << "NO" << std::endl;
+      break;
+    case result::YES:
+      std::cout << "YES" << std::endl;
+      break;
+  }
 
   // std::source_location location = std::source_location::current();
 
