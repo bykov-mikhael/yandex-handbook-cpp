@@ -1,6 +1,5 @@
-#include <algorithm>
-#include <cctype>
 #include <iostream>
+#include <string>
 
 /**
  * Известный алгоритм Soundex определяет, похожи ли два английских слова по
@@ -8,41 +7,91 @@
  * четырёхсимвольный код. Если коды двух слов совпадают, то слова, как правило,
  * звучат похоже.
  * Вам требуется реализовать этот алгоритм. Он работает так:
- * Первая буква слова сохраняется.
- * В остальной части слова буквы a, e, h, i, o, u, w и y удаляются;
+ * 1 - Первая буква слова сохраняется.
+ * 2. В остальной части слова буквы a, e, h, i, o, u, w и y удаляются;
  * Оставшиеся буквы заменяются на цифры от 1 до 6, причём похожим по звучанию
- * буквам соответствуют одинаковые цифры: b, f, p, v: 1 c, g, j, k, q, s, x, z:
- * 2
+ * буквам соответствуют одинаковые цифры:
+ * b, f, p, v: 1
+ * c, g, j, k, q, s, x, z: 2
  * d, t: 3
  * l: 4
  * m, n: 5
  * r: 6
- * Любая последовательность идущих подряд одинаковых цифр сокращается до одной
- * такой цифры. Итоговая строка обрезается до первых четырёх символов. Если
- * длина
- * строки получилась меньше четырёх символов, в конце добавляются нули. Примеры:
+ * 3. Любая последовательность идущих подряд одинаковых цифр сокращается до
+ * одной такой цифры Итоговая строка обрезается до первых четырёх символов
+ * Если длина строки получилась меньше четырёх символов, в конце добавляются
+ * нули
+ * Примеры:
  * ammonium → ammnm → a5555 → a5 → a500.
  * implementation → implmnttn → i51455335 → i514535 → i514.
  */
 
 struct answer {
-  std::string convert(std::string& string) { return {}; };
+  std::string append(std::string& string, char ch) {
+    if (!string.ends_with(ch)) {
+      string.push_back(ch);
+    }
+    return string;
+  }
+
+  std::string convert(std::string& string) {
+    std::string str{};
+
+    str.push_back(string[0]);
+
+    for (size_t pos = 1; pos != string.size(); pos++) {
+      switch (string[pos]) {
+        case 'b':
+          append(str, 'b');
+        case 'f':
+          append(str, 'f');
+        case 'p':
+          append(str, 'p');
+        case 'v':
+          append(str, 'v');
+          append('1');
+          break;
+        case 'c':
+        case 'g':
+        case 'j':
+        case 'k':
+        case 'q':
+        case 's':
+        case 'x':
+        case 'z':
+          str.push_back('2');
+          break;
+        case 'd':
+        case 't':
+          str.push_back('3');
+          break;
+        case 'l':
+          str.push_back('4');
+          break;
+        case 'm':
+        case 'n':
+          str.push_back('5');
+          break;
+        case 'r':
+          str.push_back('4');
+          break;
+        default:
+          break;
+      }
+    }
+    return str;
+  }
 };
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
+  answer ans;
   std::string string{""};
 
   std::cout << "input string: ";
 
   std::getline(std::cin, string);
 
-  // std::source_location location = std::source_location::current();
-
-  // std::cout << location.file_name() << std::endl;
-
-  // std::cout << location.line() << std::endl;
-
-  // std::cout << location.function_name() << std::endl;
+  std::cout << ans.convert(string) << std::endl;
 
   return EXIT_SUCCESS;
 }

@@ -1,8 +1,6 @@
 #include <algorithm>
 #include <cctype>
-#include <ios>
 #include <iostream>
-#include <iterator>
 // #include <source_location>
 
 /**
@@ -25,8 +23,8 @@ struct answer {
     /*
      * - состоять из символов таблицы ASCII с кодами от 33 до 126;
      */
-    int numCode = std::ranges::count_if(
-        password.begin(), password.end(), [&numCode](auto ch) {
+    int numCode =
+        std::count_if(password.begin(), password.end(), [&numCode](auto ch) {
           if ((static_cast<int>(ch) > min_ch_code) ||
               (static_cast<int>(ch) < max_ch_code)) {
             numCode++;
@@ -44,14 +42,11 @@ struct answer {
      * - из 4 классов символов — большие буквы, маленькие буквы, цифры, прочие -
      * символы — в пароле должны присутствовать не менее трёх любых.
      */
-    int numUpper =
-        std::ranges::count_if(password.begin(), password.end(), isupper);
+    int numUpper = std::count_if(password.begin(), password.end(), isupper);
 
-    int numLower =
-        std::ranges::count_if(password.begin(), password.end(), islower);
+    int numLower = std::count_if(password.begin(), password.end(), islower);
 
-    int numDigit =
-        std::ranges::count_if(password.begin(), password.end(), isdigit);
+    int numDigit = std::count_if(password.begin(), password.end(), isdigit);
 
     if ((numUpper + numLower + numDigit) < SYMBOLS_COUNT) {
       return result::NO;

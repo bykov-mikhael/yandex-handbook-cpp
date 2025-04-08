@@ -18,6 +18,9 @@ target_compile_options(tsk-222 PUBLIC -Wall -Wextra -Werror -pedantic)
 add_executable(tsk-241 tsk-241.cpp)
 target_compile_options(tsk-241 PUBLIC -Wall -Wextra -Werror -pedantic)
 
+add_executable(tsk-242 tsk-242.cpp)
+target_compile_options(tsk-242 PUBLIC -Wall -Wextra -Werror -pedantic)
+
 ######################################################################
 #                         Google tests
 ######################################################################
