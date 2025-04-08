@@ -27,9 +27,13 @@
  */
 
 struct answer {
-  std::string append(std::string& string, char ch) {
-    if (!string.ends_with(ch)) {
-      string.push_back(ch);
+  std::string append(std::string& string, char code) {
+    /**
+     * @brief если последний символ строки - string не совпадает с символом -
+     * code, тогда добавляется числовой код - code, иначе ничего не происходит
+     */
+    if (!string.ends_with(code)) {
+      string.push_back(code);
     }
     return string;
   }
@@ -42,14 +46,10 @@ struct answer {
     for (size_t pos = 1; pos != string.size(); pos++) {
       switch (string[pos]) {
         case 'b':
-          append(str, 'b');
         case 'f':
-          append(str, 'f');
         case 'p':
-          append(str, 'p');
         case 'v':
-          append(str, 'v');
-          // append('1');
+          append(str, '1');
           break;
         case 'c':
         case 'g':
@@ -59,26 +59,33 @@ struct answer {
         case 's':
         case 'x':
         case 'z':
-          str.push_back('2');
+          append(str, '2');
           break;
         case 'd':
         case 't':
-          str.push_back('3');
+          append(str, '3');
           break;
         case 'l':
-          str.push_back('4');
+          append(str, '4');
           break;
         case 'm':
         case 'n':
-          str.push_back('5');
+          append(str, '5');
           break;
         case 'r':
-          str.push_back('4');
+          append(str, '6');
           break;
         default:
           break;
       }
     }
+
+    while (str.size() < 4) {
+      str.push_back('0');
+    }
+
+    str.resize(4);
+
     return str;
   }
 };
