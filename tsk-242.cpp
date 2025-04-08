@@ -49,7 +49,7 @@ struct answer {
           append(str, 'p');
         case 'v':
           append(str, 'v');
-          append('1');
+          // append('1');
           break;
         case 'c':
         case 'g':
